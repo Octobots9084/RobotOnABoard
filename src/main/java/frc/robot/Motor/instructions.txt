@@ -1,0 +1,7 @@
+1. Create a new file inside frc.robot.Motor called Motor.java
+2. it need to extend SubsystemBase
+3. Create the constructor, initialize the config, MotionMagic, and TalonFX
+Use MotionMagicVoltage if you are doing a position based motor and
+MotionMagicVelocityVoltage for a velocity based motor.
+4. Create the overrided periodic method
+5. Create a setState method
