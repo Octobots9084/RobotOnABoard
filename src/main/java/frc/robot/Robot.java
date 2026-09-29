@@ -5,8 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Motor.Motor;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -23,10 +25,17 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+
+  private Motor motor;
+  private XboxController controller;
+
   public Robot() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    controller = new XboxController(0);
+    motor = new Motor();
+
   }
 
   /**
@@ -72,11 +81,43 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    
+  }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    if(controller.getYButtonPressed()) {
+      motor.setState(10);
+      SmartDashboard.putBoolean("Y was clicked",true);
+      SmartDashboard.putBoolean("X was clicked",false);
+      SmartDashboard.putBoolean("A was clicked",false);
+      SmartDashboard.putBoolean("B was clicked",false);
+    }else if(controller.getXButtonPressed()) {
+      motor.setState(5);
+      SmartDashboard.putBoolean("Y was clicked",false);
+      SmartDashboard.putBoolean("X was clicked",true);
+      SmartDashboard.putBoolean("A was clicked",false);
+      SmartDashboard.putBoolean("B was clicked",false);
+    }else if(controller.getAButtonPressed()) {
+      motor.setState(-10);
+      SmartDashboard.putBoolean("A was clicked",true);
+      SmartDashboard.putBoolean("X was clicked",false);
+      SmartDashboard.putBoolean("Y was clicked",false);
+      SmartDashboard.putBoolean("B was clicked",false);
+    }else if(controller.getBButtonPressed()) {
+      motor.setState(-5);
+      SmartDashboard.putBoolean("B was clicked",true);
+      SmartDashboard.putBoolean("X was clicked",false);
+      SmartDashboard.putBoolean("A was clicked",false);
+      SmartDashboard.putBoolean("Y was clicked",false);
+    }else if(controller.getLeftBumperButtonPressed()){
+      motor.setState(0);
+      SmartDashboard.putBoolean("Left bumper was clicked",true);
+    }
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
