@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Motor.Motor;
+import frc.robot.Motor.MotorPosition;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
    */
 
   private Motor motor;
+  private MotorPosition positionMotor;
   private XboxController controller;
 
   public Robot() {
@@ -35,6 +37,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     controller = new XboxController(0);
     motor = new Motor();
+    positionMotor = new MotorPosition();
 
   }
 
@@ -90,32 +93,20 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     if(controller.getYButtonPressed()) {
-      motor.setState(10);
-      SmartDashboard.putBoolean("Y was clicked",true);
-      SmartDashboard.putBoolean("X was clicked",false);
-      SmartDashboard.putBoolean("A was clicked",false);
-      SmartDashboard.putBoolean("B was clicked",false);
+      //motor.setState(10);
+      positionMotor.setState(2);
     }else if(controller.getXButtonPressed()) {
-      motor.setState(5);
-      SmartDashboard.putBoolean("Y was clicked",false);
-      SmartDashboard.putBoolean("X was clicked",true);
-      SmartDashboard.putBoolean("A was clicked",false);
-      SmartDashboard.putBoolean("B was clicked",false);
+      //motor.setState(5);
+      positionMotor.setState(1);
     }else if(controller.getAButtonPressed()) {
-      motor.setState(-10);
-      SmartDashboard.putBoolean("A was clicked",true);
-      SmartDashboard.putBoolean("X was clicked",false);
-      SmartDashboard.putBoolean("Y was clicked",false);
-      SmartDashboard.putBoolean("B was clicked",false);
+      //motor.setState(-10);
+      positionMotor.setState(-2);
     }else if(controller.getBButtonPressed()) {
-      motor.setState(-5);
-      SmartDashboard.putBoolean("B was clicked",true);
-      SmartDashboard.putBoolean("X was clicked",false);
-      SmartDashboard.putBoolean("A was clicked",false);
-      SmartDashboard.putBoolean("Y was clicked",false);
+      //motor.setState(-5);
+      positionMotor.setState(-1);
     }else if(controller.getLeftBumperButtonPressed()){
-      motor.setState(0);
-      SmartDashboard.putBoolean("Left bumper was clicked",true);
+      //motor.setState(0);
+      positionMotor.setState(0);
     }
   }
 

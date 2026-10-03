@@ -26,11 +26,11 @@ public class Motor extends SubsystemBase {
         config.CurrentLimits.StatorCurrentLimit = 40;
         config.CurrentLimits.StatorCurrentLimitEnable = true;
 
-        config.Slot0.kP = 0.65;
+        config.Slot0.kP = 0.35;
         config.Slot0.kI = 0.0;
         config.Slot0.kD = 0.0;
         config.Slot0.kA = 0.0;
-        config.Slot0.kV = 0.0;
+        config.Slot0.kV = 0.12;
         config.Slot0.kS = 0.0;
         config.Slot0.kG = 0.0;
 
@@ -41,7 +41,12 @@ public class Motor extends SubsystemBase {
 
     }
 
-    public void setState(double x) {
-        fx.setControl(velocity.withVelocity(x));
+    public void setState(double setSpeed) {
+        if(setSpeed == 0){
+            fx.setVoltage(0);
+        }
+        else{
+            fx.setControl(velocity.withVelocity(setSpeed));
+        }
     }
 }
