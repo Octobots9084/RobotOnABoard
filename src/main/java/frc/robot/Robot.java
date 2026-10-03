@@ -4,9 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.estimator.SteadyStateKalmanFilter;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Motor.Motor;
+import frc.robot.Motor.PositionMotor;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -18,6 +22,8 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private XboxController xbox;
+  private PositionMotor motor;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -27,6 +33,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    xbox = new XboxController(0);
+    motor = new PositionMotor();
   }
 
   /**
@@ -76,11 +84,25 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (xbox.getRightBumperButton()) {
+      motor.setState(0);
+    } else if (xbox.getXButton()) {
+      motor.setState(1);
+    } else if (xbox.getBButton()) {
+      motor.setState(-1);
+    } else if (xbox.getYButton()) {
+      motor.setState(0.5);
+    } else if (xbox.getAButton()) {
+      motor.setState(-0.5);
+    }
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    motor.setState(0);
+  }
 
   /** This function is called periodically when disabled. */
   @Override
