@@ -42,7 +42,7 @@ public class PositionMotor extends SubsystemBase {
         config.MotionMagic.MotionMagicAcceleration = 3;
         config.MotionMagic.MotionMagicCruiseVelocity = 15;
         config.MotionMagic.MotionMagicJerk = 5;
-        
+        motor.getConfigurator().apply(config);
     }
 
     /*public void periodic() {
