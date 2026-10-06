@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.controls.SolidColor;
+import com.ctre.phoenix6.signals.RGBWColor;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Lights.Lights;
 import frc.robot.Motor.Motor;
 import frc.robot.Motor.MotorPosition;
 
@@ -30,6 +34,7 @@ public class Robot extends TimedRobot {
   private Motor motor;
   private MotorPosition positionMotor;
   private XboxController controller;
+  private Lights lights;
 
   public Robot() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -38,6 +43,7 @@ public class Robot extends TimedRobot {
     controller = new XboxController(0);
     motor = new Motor();
     positionMotor = new MotorPosition();
+    lights = new Lights();
 
   }
 
@@ -107,6 +113,10 @@ public class Robot extends TimedRobot {
     }else if(controller.getLeftBumperButtonPressed()){
       //motor.setState(0);
       positionMotor.setState(0);
+    }else if(controller.getPOV() == 0){
+      lights.chooseColor(new SolidColor(0,65).withColor(new RGBWColor(0, 0, 250, 100)));
+    }else if(controller.getPOV() == 180){
+      lights.chooseColor(new SolidColor(0,65).withColor(new RGBWColor(255, 0, 0, 0)));
     }
   }
 

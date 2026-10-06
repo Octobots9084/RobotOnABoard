@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorPosition extends SubsystemBase{
@@ -14,6 +15,7 @@ public class MotorPosition extends SubsystemBase{
     private TalonFXConfiguration config;
     
     public MotorPosition(){
+        // SmartDashboard.putBoolean("btn1", false);
         voltage = new MotionMagicVoltage(0);
         fx = new TalonFX(1,"krakenbus");
         config = new TalonFXConfiguration();
@@ -22,7 +24,7 @@ public class MotorPosition extends SubsystemBase{
         config.CurrentLimits.StatorCurrentLimit = 40;
         config.CurrentLimits.StatorCurrentLimitEnable = true;
 
-        config.Slot0.kP = 80.0;
+        config.Slot0.kP = 40.0;
         config.Slot0.kI = 0.0;
         config.Slot0.kD = 0.0;
         config.Slot0.kA = 0.0;
@@ -30,9 +32,9 @@ public class MotorPosition extends SubsystemBase{
         config.Slot0.kS = 0.0;
         config.Slot0.kG = 0.0;
 
-        config.MotionMagic.MotionMagicAcceleration = 3;
-        config.MotionMagic.MotionMagicJerk = 5;
-        config.MotionMagic.MotionMagicCruiseVelocity = 15;
+        config.MotionMagic.MotionMagicAcceleration = 1000;
+        config.MotionMagic.MotionMagicJerk = 0;
+        config.MotionMagic.MotionMagicCruiseVelocity = 2000;
 
         fx.getConfigurator().apply(config);
     }
