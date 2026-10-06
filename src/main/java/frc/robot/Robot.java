@@ -5,8 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Motor.Motor;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -23,10 +26,14 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  XboxController controller;
+  Motor motor;
   public Robot() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    controller = new XboxController(0);
+    motor = new Motor(controller);
   }
 
   /**
@@ -37,7 +44,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
