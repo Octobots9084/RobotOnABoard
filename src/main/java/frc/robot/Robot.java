@@ -117,6 +117,8 @@ public class Robot extends TimedRobot {
       lights.chooseColor(new SolidColor(0,65).withColor(new RGBWColor(0, 0, 250, 100)));
     }else if(controller.getPOV() == 180){
       lights.chooseColor(new SolidColor(0,65).withColor(new RGBWColor(255, 0, 0, 0)));
+    }else if(controller.getPOV() == 90){
+      lights.colorfulShow();
     }
   }
 
