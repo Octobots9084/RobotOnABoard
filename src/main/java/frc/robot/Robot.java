@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Swerve.SwerveStates;
@@ -53,8 +55,6 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
-  @Override
-  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}
@@ -89,8 +89,29 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
+  private final PWMSparkMax m_motor = new PWMSparkMax(0);
+  private final PWMSparkMax n_motor = new PWMSparkMax(1);
+  private final XboxController m_controller = new XboxController(0);
+
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // Read left stick Y-axis (-1.0 to 1.0); invert if forward pushes negative
+    double speed = -m_controller.getLeftX();
+
+    // Small deadband so stick drift doesn't creep the motor
+    if (Math.abs(speed) < 0.05) {
+      speed = 0.0;
+    }
+
+    m_motor.set(speed);
+    n_motor.set(-speed);
+  }
+
+  @Override
+  public void disabledInit() {
+    m_motor.stopMotor();
+    n_motor.stopMotor();
+  }
 
   @Override
   public void testInit() {
